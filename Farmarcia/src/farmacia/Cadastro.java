@@ -1,15 +1,15 @@
 package farmacia;
 
 import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
+import java .sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax .swing .JButton;
+import javax .swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,6 +26,7 @@ public class Cadastro extends JFrame{
 //textfield: campo de texto
 	private JPasswordField campoConfirmarSenha;
 	private JButton botaoCadastrar;
+	private JButton botaoVoltar;
 	
   private final String DB_URL="jdbc:mysql://localhost:3306/farmacia";
   private final String DB_USER= "root";
@@ -45,6 +46,7 @@ public class Cadastro extends JFrame{
 	campoSenha =new JPasswordField();
 	campoConfirmarSenha= new JPasswordField();
 	botaoCadastrar =new JButton("Cadastrar");
+	botaoVoltar = new JButton("Voltar");
 	
 	panel.add(new JLabel("Nome:"));
 	panel.add(campoNome);
@@ -56,15 +58,24 @@ public class Cadastro extends JFrame{
 	panel.add(campoSenha);
 	
 	panel.add(new JLabel ("Confirmar Senha:"));
+	
 	panel.add(campoConfirmarSenha);
 	panel.add(botaoCadastrar);
+	panel.add(botaoVoltar);
 	
 	add(panel);
 		
-botaoCadastrar.addActionListener(new ActionListener() {
-
+botaoVoltar.addActionListener(new ActionListener() {
 public void actionPerformed(ActionEvent e) {
+	dispose();
+	Login login= new Login();
+	login.setVisible(true);
 	
+}
+});
+botaoCadastrar.addActionListener(new ActionListener() {
+	@Override
+public void actionPerformed(ActionEvent e) {
 String nome = campoNome.getText();
 String email= campoUsuario.getText();
 String senha = new String (campoSenha.getPassword());
@@ -90,7 +101,9 @@ preparedStatement.executeUpdate();
 
  JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
  preparedStatement.close();
-
+dispose();
+Login login =new Login();
+login.setVisible(true);
     
 } catch (Exception e2) {
     
